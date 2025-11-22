@@ -153,6 +153,20 @@
     v(1em)
   }
 
+  // TODO(Gatlen): Fix appendix function to have proper numbering
+  let appendix(unused: none, body) = {
+    let appendixNumbering = (..args) => {
+      let (h1, ..h2-onward) = args.pos()
+      let num = if h2-onward.len() == 0 {} else { numbering("1", ..h2-onward) }
+      num
+    }
+
+    set heading(numbering: appendixNumbering, supplement: [Appendix])
+
+    counter(heading).update(0)
+    body
+  }
+
   // Display the paper's contents.
   body
 
