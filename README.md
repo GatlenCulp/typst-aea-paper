@@ -1,54 +1,25 @@
-# The `my-package` Package
+# The American Economics Association Paper Template
 <div align="center">Version 0.1.0</div>
 
-A short description about the project and/or client.
-
-## Template adaptation checklist
-
-- [ ] Fill out `README.md`
-  - Change the `my-package` package name, including code snippets
-  - Check section contents and/or delete sections that don't apply
-- [ ] Check and/or replace `LICENSE` by something that suits your needs
-- [ ] Fill out `typst.toml`
-  - See also the [typst/packages README](https://github.com/typst/packages/?tab=readme-ov-file#package-format)
-- [ ] Adapt Repository URLs in `CHANGELOG.md`
-  - Consider only committing that file with your first release, or removing the "Initial Release" part in the beginning
-- [ ] Adapt or deactivate the release workflow in `.github/workflows/release.yml`
-  - to deactivate it, delete that file or remove/comment out lines 2-4 (`on:` and following)
-  - to use the workflow
-    - [ ] check the values under `env:`, particularly `REGISTRY_REPO`
-    - [ ] if you don't have one, [create a fine-grained personal access token](https://github.com/settings/tokens?type=beta) with [only Contents permission](https://stackoverflow.com/a/75116350/371191) for the `REGISTRY_REPO`
-    - [ ] on this repo, create a secret `REGISTRY_TOKEN` (at `https://github.com/[user]/[repo]/settings/secrets/actions`) that contains the so created token
-
-    if configured correctly, whenever you create a tag `v...`, your package will be pushed onto a branch on the `REGISTRY_REPO`, from which you can then create a pull request against [typst/packages](https://github.com/typst/packages/)
-- [ ] remove/replace the example test case
-- [ ] (add your actual code, docs and tests)
-- [ ] remove this section from the README
+American Economics Association paper template. Minimally implemented, not ready for submission or official, but felt worth sharing as a starting point regardless. Derived from IEEE-Charged template. Developed in reference to this template: https://www.overleaf.com/latex/templates/journal-template-for-aea-papers-and-proceedings-p-and-p/scjnwckghgyh
 
 ## Getting Started
 
-These instructions will get you a copy of the project up and running on the typst web app. Perhaps a short code example on importing the package and a very simple teaser usage.
-
-```typ
-#import "@preview/my-package:0.1.0": *
-
-#show: my-show-rule.with()
-#my-func()
-```
-
-<picture>
+<!-- <picture>
   <source media="(prefers-color-scheme: dark)" srcset="./thumbnail-dark.svg">
   <img src="./thumbnail-light.svg">
-</picture>
+</picture> -->
 
 ### Installation
 
 A step by step guide that will tell you how to get the development environment up and running. This should explain how to clone the repo and where to (maybe a link to the typst documentation on it), along with any pre-requisite software and installation steps.
 
-```
-$ First step
-$ Another step
-$ Final step
+```bash
+# CLone this repository and cd into it
+$ git clone git@github.com:GatlenCulp/typst-aea-paper.git
+$ cd typst-aea-paper
+# Requires "just" be installed. Installs the package to your Typst local files to be imported with @local/aea-paper
+$ just install
 ```
 
 ## Usage
@@ -56,14 +27,62 @@ $ Final step
 A more in-depth description of usage. Any template arguments? A complicated example that showcases most if not all of the functions the package provides? This is also an excellent place to signpost the manual.
 
 ```typ
-#import "@preview/my-package:0.1.0": *
+#import "@local/aea-paper:0.1.0": *
 
-#let my-complicated-example = ...
+#show: aea.with(
+  title: [Title],
+  short-title: [Short title for running head],
+  authors: (
+    (
+      name: "Author1",
+      affiliation: "affiliation1",
+      email: "email1",
+    ),
+    (
+      name: "Author2",
+      affiliation: "affiliation2",
+      email: "email2",
+    ),
+  ),
+  acknowledgments: [Acknowledgements],
+  pub-month: "Month",
+  pub-year: "Year",
+  pub-volume: "Vol",
+  pub-issue: "Issue",
+  draft: false, // Set to true for 1.5 spacing
+  bibliography: bibliography("refs.bib"),
+)
 ```
 
-## Additional Documentation and Acknowledgments
+## Initialize Template
 
-* Project folder on server:
-* Confluence link:
-* Asana board:
-* etc...
+
+Alternatively, you can use the CLI to kick this project off using the command
+```
+typst init @local/aea-paper
+```
+
+Typst will create a new directory with all the files needed to get you started.
+
+
+## Configuration
+This template exports the `ieee` function with the following named arguments:
+
+- `title`: The paper's title as content.
+- `authors`: An array of author dictionaries. Each of the author dictionaries
+  must have a `name` key and can have the keys `department`, `organization`,
+  `location`, and `email`. All keys accept content.
+- `abstract`: The content of a brief summary of the paper or `none`. Appears at
+  the top of the first column in boldface.
+- `index-terms`: Array of index terms to display after the abstract. Shall be
+  `content`.
+- `paper-size`: Defaults to `us-letter`. Specify a [paper size
+  string](https://typst.app/docs/reference/layout/page/#parameters-paper) to
+  change the page format.
+- `bibliography`: The result of a call to the `bibliography` function or `none`.
+  Specifying this will configure numeric, IEEE-style citations.
+- `figure-supplement`: How figures are referred to from within the text. Use
+  `"Figure"` instead of `"Fig."` for computer-related publications.
+
+The function also accepts a single, positional argument for the body of the
+paper.
