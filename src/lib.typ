@@ -1,6 +1,8 @@
 // This function formats your document as an article in the style of the AEA
 // (American Economic Association) Papers and Proceedings.
 
+// TODO: [typst-template] Get the AEA template to use appendix properly. Learn the best way to do this.
+
 #let aea(
   // The paper's title.
   title: [Paper Title],

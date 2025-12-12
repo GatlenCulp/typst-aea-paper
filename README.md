@@ -86,3 +86,6 @@ This template exports the `ieee` function with the following named arguments:
 
 The function also accepts a single, positional argument for the body of the
 paper.
+
+## TODO
+TODO: [typst-template] Get the AEA template to use appendix properly. Learn the best way to do this.
